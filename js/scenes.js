@@ -545,7 +545,7 @@
     hotspots: [
       {
         id: 'zed', name: 'Zappy Zed', rect: [56, 180, 160, 170],
-        art: `<path d="M38 126l190 0l-16 40H54z" fill="#5fb3ff" stroke="${OUT}" stroke-width="3"/><path d="M54 126l16 40M102 126l-4 40M150 126l4 40M198 126l-12 40" stroke="#e8f1ff" stroke-width="5"/><rect x="48" y="290" width="170" height="60" rx="6" fill="#4a3a5e" stroke="${OUT}" stroke-width="3"/>` + chars.zed(130, 296, 1.1),
+        art: `<path d="M58 166V292M208 166V292" stroke="#4a3a5e" stroke-width="7"/><path d="M38 126l190 0l-16 40H54z" fill="#5fb3ff" stroke="${OUT}" stroke-width="3"/><path d="M54 126l16 40M102 126l-4 40M150 126l4 40M198 126l-12 40" stroke="#e8f1ff" stroke-width="5"/><rect x="48" y="290" width="170" height="60" rx="6" fill="#4a3a5e" stroke="${OUT}" stroke-width="3"/>` + chars.zed(130, 296, 1.1),
         look: 'Zappy Zed: a spiky blue vendor who is mostly hair and voltage. His smile is genuine; his handshake is not safe.',
         talk: { dialogue: 'zed' },
         take: 'You reach for a static charge. It reaches back. Ow. That counts as a lesson, not a clue.',

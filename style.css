@@ -156,7 +156,7 @@ button { font: inherit; color: inherit; }
 /* Dialogue */
 .dialogue {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 5;
-  background: rgba(7, 13, 32, 0.95); border-top: 2px solid var(--teal);
+  background: #070d20; border-top: 2px solid var(--teal);
   padding: 12px 14px 14px; max-height: 96%; overflow-y: auto;
 }
 .d-head { display: flex; align-items: center; gap: 10px; }

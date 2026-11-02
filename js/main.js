@@ -30,7 +30,6 @@
     });
     return s;
   };
-  const sockPair = (x, y, s) => ch().cotton ? '' : '';
   const socks = (x, y, s, fill) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-17 -88H17V-38C17 -28 46 -24 46 -8C46 3 38 6 26 6H-9C-22 6 -17 -8 -17 -16Z" fill="${fill}" stroke="#0b1630" stroke-width="3"/><rect x="-18" y="-94" width="36" height="13" rx="3" fill="#a05252" stroke="#0b1630" stroke-width="3"/></g>`;
 
   function titleArt() {

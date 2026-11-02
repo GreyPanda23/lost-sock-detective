@@ -57,3 +57,11 @@ README.md           run + how to add a scene
 
 ## Milestones (each committed and pushed)
 a) engine + hub, b) inventory + dialogue, c) all scenes + puzzles, d) notebook + endings + audio, e) polish + tests.
+
+## Implementation notes (as built)
+- Engine rules live in `LSD.Core` (DOM-free) so `test/winning-path.js` plays the same code the browser runs.
+- Content is data: responses are strings, effect objects (`say, give, take, clue, set, goto, dialogue, puzzle, end`), or arrays of `if` cases.
+- Tower door unlocks with any 3 clues (as briefed). The Static Cling alibi puzzle is optional for the win but supplies the confession clue and the "Static Cling" contradiction; every other puzzle is on the critical path.
+- Knot order is derivable from the dried note ("Yellow over Red over Blue over Green"), and the test proves it with a topological sort.
+- Spin Cycle clock: 150 actions across Fill / Wash / Rinse / Spin, then "Extra Spin". It only changes narration and drum speed.
+- Secret ending needs the sock diary (behind Phil's gate) and a talk with the freed sock.

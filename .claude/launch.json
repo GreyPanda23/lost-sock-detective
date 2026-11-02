@@ -1,6 +1,0 @@
-{
-  "version": "0.0.1",
-  "configurations": [
-    { "name": "game", "runtimeExecutable": "node", "runtimeArgs": ["/private/tmp/claude-501/-Users-pranavk--claude-spares-spare-g7KMuC/fc4e7378-f7ca-4a3f-a60a-18bea55b1c7f/scratchpad/serve.js"], "port": 8123 }
-  ]
-}
