@@ -90,7 +90,7 @@
     if ('has' in c) return S.inv.includes(c.has);
     if ('clue' in c) return S.clues.includes(c.clue);
     if ('flag' in c) return !!S.flags[c.flag];
-    if ('is' in c) return S.flags[c.is[0]] === c.is[1];
+    if ('is' in c) return (S.flags[c.is[0]] || 0) === c.is[1];
     if ('clues' in c) return S.clues.length >= c.clues;
     if ('seen' in c) return !!S.seen[c.seen];
     return false;
