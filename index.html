@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1630">
+<title>Lost Sock Detective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1630'/%3E%3Cpath d='M24 10h16v26c0 4 14 6 14 16 0 7-6 10-13 10H29c-8 0-5-8-5-12z' fill='%233fd0c9'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- TITLE -->
+  <section id="screen-title" class="screen active" aria-label="Title screen">
+    <svg id="title-art" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="title-card">
+      <p class="kicker">A Washing Machine Dimension Mystery</p>
+      <h1>Lost Sock<br>Detective</h1>
+      <p class="tagline">Somebody's missing a left sock. Somebody's lying.</p>
+      <div class="menu">
+        <button id="btn-new" class="btn primary">New Case</button>
+        <button id="btn-continue" class="btn" hidden>Continue Case</button>
+        <button id="btn-howto" class="btn ghost" aria-expanded="false">How to play</button>
+      </div>
+      <div id="howto" class="howto" hidden>
+        <p><b>Pick a verb</b> (Look, Talk, Take, Use) then click things in the scene. Click an <b>inventory item</b> and then a hotspot to use it, or click a second item to combine them.</p>
+        <p>The <b>Notebook</b> keeps your clues, suspects and a tally of who lied about what. Accuse from there when you are sure.</p>
+      </div>
+    </div>
+    <button class="icon-btn mute-toggle" aria-label="Toggle sound"></button>
+  </section>
+
+  <!-- INTRO CUTSCENE -->
+  <section id="screen-intro" class="screen" aria-label="Intro">
+    <svg id="intro-art" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="intro-card">
+      <p id="intro-text" aria-live="polite"></p>
+      <div class="menu row">
+        <button id="intro-next" class="btn primary">Next</button>
+        <button id="intro-skip" class="btn ghost">Skip</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME -->
+  <section id="screen-game" class="screen" aria-label="Game">
+    <header id="hud">
+      <div class="brand">Lost Sock <span>Detective</span></div>
+      <div id="cycle" title="Spin Cycle: a soft story clock">
+        <span id="cycle-label">Fill</span>
+        <div class="bar"><i id="cycle-fill"></i></div>
+      </div>
+      <div class="hud-btns">
+        <button id="btn-hint" class="btn small" aria-label="Highlight hotspots" title="Highlight hotspots">&#10022;</button>
+        <button id="btn-notebook" class="btn small">Notebook <b id="clue-count">0</b></button>
+        <button class="btn small mute-toggle" aria-label="Toggle sound"></button>
+        <button id="btn-pause" class="btn small">Menu</button>
+      </div>
+    </header>
+
+    <div id="stage-wrap">
+      <svg id="stage" viewBox="0 0 800 450" role="group" aria-label="Scene">
+        <defs>
+          <radialGradient id="gDrum" cx="50%" cy="48%" r="75%"><stop offset="0" stop-color="#1a3470"/><stop offset="1" stop-color="#060b1d"/></radialGradient>
+          <linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2e5e"/><stop offset="1" stop-color="#09112b"/></linearGradient>
+          <radialGradient id="gGlowTeal"><stop offset="0" stop-color="#3fd0c9" stop-opacity=".55"/><stop offset="1" stop-color="#3fd0c9" stop-opacity="0"/></radialGradient>
+          <radialGradient id="gGlowWarm"><stop offset="0" stop-color="#ff8a3d" stop-opacity=".6"/><stop offset="1" stop-color="#ff8a3d" stop-opacity="0"/></radialGradient>
+          <linearGradient id="gSuds" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bff5f1" stop-opacity=".9"/><stop offset="1" stop-color="#2a8f8b" stop-opacity=".9"/></linearGradient>
+        </defs>
+        <rect width="800" height="450" fill="url(#gDrum)"/>
+        <g id="drum"></g>
+        <g id="bg"></g>
+        <g id="hs"></g>
+        <g id="fx" pointer-events="none"></g>
+      </svg>
+      <div id="scene-name"></div>
+      <div id="hoverlabel" hidden></div>
+      <div id="dialogue" class="dialogue" hidden role="dialog" aria-label="Conversation">
+        <div class="d-head">
+          <svg id="d-portrait" viewBox="-48 -112 96 116" aria-hidden="true"></svg>
+          <strong id="d-name"></strong>
+        </div>
+        <div id="d-text"></div>
+        <div id="d-choices"></div>
+      </div>
+    </div>
+
+    <nav id="verbs" aria-label="Verbs">
+      <button class="verb on" data-verb="look">Look</button>
+      <button class="verb" data-verb="talk">Talk</button>
+      <button class="verb" data-verb="take">Take</button>
+      <button class="verb" data-verb="use">Use</button>
+    </nav>
+    <div id="narrator" aria-live="polite"></div>
+    <div id="inventory-wrap">
+      <div id="inventory" role="list" aria-label="Inventory"></div>
+      <div id="itemdesc"></div>
+    </div>
+  </section>
+
+  <!-- ENDING -->
+  <section id="screen-ending" class="screen" aria-label="Ending">
+    <svg id="ending-art" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="ending-card">
+      <p id="ending-kicker" class="kicker"></p>
+      <h2 id="ending-title"></h2>
+      <div id="ending-body"></div>
+      <div class="menu row">
+        <button id="ending-again" class="btn primary">Play Again</button>
+        <button id="ending-title-btn" class="btn">Title Screen</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERLAYS -->
+  <div id="overlay-pause" class="overlay" hidden>
+    <div class="panel narrow" role="dialog" aria-label="Paused">
+      <h2>Paused</h2>
+      <p class="muted">The drum keeps turning. Your case waits.</p>
+      <div class="menu">
+        <button id="pause-resume" class="btn primary">Resume</button>
+        <button id="pause-notebook" class="btn">Notebook</button>
+        <button class="btn mute-toggle" aria-label="Toggle sound"></button>
+        <button id="pause-quit" class="btn">Save &amp; Quit to Title</button>
+        <button id="pause-restart" class="btn ghost">Restart Case</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay-notebook" class="overlay" hidden>
+    <div class="panel" role="dialog" aria-label="Case Notebook">
+      <div class="panel-head">
+        <h2>Case Notebook</h2>
+        <button id="nb-close" class="btn small" aria-label="Close notebook">Close</button>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="tab on" data-tab="clues" role="tab">Clues</button>
+        <button class="tab" data-tab="suspects" role="tab">Suspects</button>
+        <button class="tab" data-tab="liars" role="tab">Who Lied</button>
+      </div>
+      <div id="nb-body"></div>
+      <div class="nb-foot">
+        <button id="nb-accuse" class="btn primary">Make an Accusation</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay-accuse" class="overlay" hidden>
+    <div class="panel narrow" role="dialog" aria-label="Accusation">
+      <h2>Who did it?</h2>
+      <p class="muted">Choose carefully. The drum is listening.</p>
+      <div id="accuse-list" class="menu"></div>
+      <button id="accuse-cancel" class="btn ghost">Not yet</button>
+    </div>
+  </div>
+
+  <div id="overlay-puzzle" class="overlay" hidden>
+    <div class="panel" role="dialog" aria-label="Puzzle">
+      <h2 id="puzzle-title"></h2>
+      <p id="puzzle-prompt" class="muted"></p>
+      <div id="puzzle-body"></div>
+      <div class="menu row">
+        <button id="puzzle-go" class="btn primary" hidden>Present</button>
+        <button id="puzzle-cancel" class="btn ghost">Step away</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay-dismissed" class="overlay" hidden>
+    <div class="panel narrow dismissed" role="dialog" aria-label="Case dismissed">
+      <p class="stamp">CASE DISMISSED</p>
+      <h2 id="dismissed-title"></h2>
+      <p id="dismissed-text"></p>
+      <p class="hint"><b>Hint:</b> <span id="dismissed-hint"></span></p>
+      <div class="menu row">
+        <button id="dismissed-retry" class="btn primary">Retry the Case</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script src="js/inventory.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/dialogue.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
